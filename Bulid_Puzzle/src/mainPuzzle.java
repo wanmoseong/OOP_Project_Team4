@@ -7,7 +7,7 @@ public class mainPuzzle extends JFrame {
     public mainPuzzle() {
         setTitle("Team4 Puzzle");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 450);
+        setSize(900, 600);
 
         Container c = getContentPane();
 
@@ -52,7 +52,4 @@ public class mainPuzzle extends JFrame {
     /*                                               */
     /*************************************************/
     
-    public static void main(String[] args) {
-        new mainPuzzle();
-    }
 }
