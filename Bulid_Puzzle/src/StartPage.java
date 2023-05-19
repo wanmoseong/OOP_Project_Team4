@@ -25,6 +25,14 @@ public class StartPage extends JFrame {
 		Right.setBackground(Color.GRAY);
 		Right.setPreferredSize(new Dimension(400,400));
 		
+		//Right Part. 추후 추가 예정
+		 SwingUtilities.invokeLater(new Runnable() {		// 오른쪽 패널에 파일 선택 "열기" 버튼 추가
+	            public void run() {
+	                image im = new image(Right);
+	                ImagePath = im.getImageAbsolutePath();		// 이미지의 절대경로를 ImagePath에 저장함.
+	            }
+	    	});
+		
 		//Left Part.
 		Left.setLayout(null);
 		
@@ -59,8 +67,6 @@ public class StartPage extends JFrame {
 		JButton btn5x5 = new JButton("5x5");
 		btn5x5.setBounds(100, 270, 200, 50);
 		Left.add(btn5x5);
-		
-		//Right Part. 추후 추가 예정
 		
 		setVisible(true);
 		c.add(Body);
