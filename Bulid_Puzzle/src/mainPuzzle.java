@@ -1,4 +1,11 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import javax.swing.*;
 
 public class mainPuzzle extends JFrame {
@@ -11,7 +18,7 @@ public class mainPuzzle extends JFrame {
 
         Container c = getContentPane();
 
-        JPanel p_body = new JPanel(); // 가운데
+        JPanel p_body = new JPanel();  // 가운데
         p_right = new JPanel(); // p_right = 힌트 사진
         JPanel p_left = new JPanel(); // p_left = 실행화면
         p_right.setPreferredSize(new Dimension(400, 400));
@@ -26,11 +33,52 @@ public class mainPuzzle extends JFrame {
         c.add(p_body, BorderLayout.CENTER);
         setVisible(true);
         
-        String imagePath = "./pic/Luffy.jpg"; // 실제 이미지 파일
+        
+        String imagePath = "./pic/poo.jpg"; // 실제 이미지 파일
         addImageToPanel(imagePath);
+        
+
+		setLayout(null); 
+		
+		JButton exitButton = new JButton("종료");
+		exitButton.setBounds(450, 420, 80, 30);
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+		}
+			
+		});
+		add(exitButton);
+		
+		JButton btn3x3 = new JButton("뒤로가기");
+		btn3x3.setBounds(300, 420, 100, 30);
+
+		btn3x3.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new StartPage();
+			}
+		});
+		add(btn3x3);
+		
+		JButton resetButton = new JButton("초기화");
+		resetButton.setBounds(150, 420, 100, 30);
+
+		resetButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        // 초기화 작업을 수행하는 코드를 여기에 작성하세요.
+		    }
+		});
+
+		add(resetButton);
+		
+			
+		
+	
     }
     
-    //우측 Panel 힌트 추가를 위한 메소드
+     //우측 Panel 힌트 추가를 위한 메소드
     private void addImageToPanel(String imagePath) {
         ImageIcon originalImageIcon = new ImageIcon(imagePath);
         Image originalImage = originalImageIcon.getImage();
