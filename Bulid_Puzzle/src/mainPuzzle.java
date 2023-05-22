@@ -10,7 +10,7 @@ public class mainPuzzle extends JFrame {
 
     public mainPuzzle() {
     	
-    	icon_p_body = new ImageIcon("C:\\Users\\dlthf\\OneDrive\\바탕 화면\\객체지향팀플\\자바 예시 그림\\Body.png"); //이미지 끌고오기
+    	icon_p_body = new ImageIcon("Body.png"); //이미지 끌고오기
 		 
 		 JPanel p_body = new JPanel() { 
 			 
