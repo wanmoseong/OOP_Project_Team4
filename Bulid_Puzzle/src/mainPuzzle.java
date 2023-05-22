@@ -1,36 +1,48 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import javax.swing.*;
 
 public class mainPuzzle extends JFrame {
-    private JPanel p_right;
+    public JPanel p_right;
+    ImageIcon icon_p_body, iconleft, iconright;
 
     public mainPuzzle() {
+    	
+    	icon_p_body = new ImageIcon("C:\\Users\\dlthf\\OneDrive\\바탕 화면\\객체지향팀플\\자바 예시 그림\\Body.png"); //이미지 끌고오기
+		 
+		 JPanel p_body = new JPanel() { 
+			 
+			 protected void paintComponent(Graphics g) {
+				 super.paintComponent(g);
+				 g.drawImage(icon_p_body.getImage(), 0, 0, getWidth(), getHeight(), null);
+			
+	         }
+		 };
+    	
         setTitle("Team4 Puzzle");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 600);
-
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
+        setSize(900, 500);
+        setLocationRelativeTo(null); //실행하면 중앙에 위치 함 
         Container c = getContentPane();
 
-        JPanel p_body = new JPanel();  // 가운데
+        
+        
+        // 가운데
         p_right = new JPanel(); // p_right = 힌트 사진
         JPanel p_left = new JPanel(); // p_left = 실행화면
+        
         p_right.setPreferredSize(new Dimension(400, 400));
-        p_right.setBackground(Color.DARK_GRAY);
+        p_right.setBackground(Color.WHITE);
         p_left.setPreferredSize(new Dimension(400, 400));
-        p_left.setBackground(Color.DARK_GRAY);
+        p_left.setBackground(Color.WHITE);
 
         p_body.add(p_left, BorderLayout.WEST);
         p_body.add(p_right, BorderLayout.EAST);
-        p_body.setBackground(Color.GRAY);
-
+        
         c.add(p_body, BorderLayout.CENTER);
+        
         setVisible(true);
         
         
@@ -38,32 +50,23 @@ public class mainPuzzle extends JFrame {
         addImageToPanel(imagePath);
         
 
-		setLayout(null); 
+        p_body.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
+	
 		
-		JButton exitButton = new JButton("종료");
-		exitButton.setBounds(450, 420, 80, 30);
-		exitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-		}
-			
-		});
-		add(exitButton);
-		
-		JButton btn3x3 = new JButton("뒤로가기");
-		btn3x3.setBounds(300, 420, 100, 30);
+		JButton back = new JButton("뒤로가기");
+		back.setBounds(230, 450, 80, 30);
 
-		btn3x3.addActionListener(new ActionListener() {
+		back.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				new StartPage();
 			}
 		});
-		add(btn3x3);
+		p_body.add(back);
 		
 		JButton resetButton = new JButton("초기화");
-		resetButton.setBounds(150, 420, 100, 30);
+		resetButton.setBounds(100, 450, 80, 30);
 
 		resetButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -71,11 +74,17 @@ public class mainPuzzle extends JFrame {
 		    }
 		});
 
-		add(resetButton);
+		p_body.add(resetButton);
 		
-			
-		
-	
+		JButton exitButton = new JButton("종료");
+		exitButton.setBounds(350, 450, 80, 30);
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				System.exit(0);
+			}
+		});
+		p_body.add(exitButton);
     }
     
      //우측 Panel 힌트 추가를 위한 메소드
@@ -101,3 +110,4 @@ public class mainPuzzle extends JFrame {
     /*************************************************/
     
 }
+
