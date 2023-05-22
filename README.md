@@ -56,5 +56,6 @@
      + Comment : 하루빨리 게임 기능을 구현하도록 노력해보겠습니다.
 
 ### May.22.2023
-# 진영
-+ mainpuzzle 코드 수정
+# 진영 #이솔하
+  + 고진영: mainpuzzle 코드 수정
+  + 이솔하 : startpuzzle 코드 수정, mainpuzzle 코드 약 수정 
