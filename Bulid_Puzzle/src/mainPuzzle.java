@@ -8,7 +8,7 @@ public class mainPuzzle extends JFrame {
     public JPanel p_right;
     ImageIcon icon_p_body, iconleft, iconright;
 
-    public mainPuzzle() {
+    public mainPuzzle(int A) {
     	
     	icon_p_body = new ImageIcon("Body.png"); //이미지 끌고오기
 		 
@@ -35,10 +35,10 @@ public class mainPuzzle extends JFrame {
         
         p_right.setPreferredSize(new Dimension(400, 400));
         p_right.setBackground(Color.WHITE);
-        p_left.setPreferredSize(new Dimension(400, 400));
-        p_left.setBackground(Color.WHITE);
+        //p_left.setPreferredSize(new Dimension(400, 400));
+        //p_left.setBackground(Color.WHITE);
 
-        p_body.add(p_left, BorderLayout.WEST);
+        p_body.add(new PicPanel(450,A), BorderLayout.WEST);
         p_body.add(p_right, BorderLayout.EAST);
         
         c.add(p_body, BorderLayout.CENTER);
@@ -110,4 +110,3 @@ public class mainPuzzle extends JFrame {
     /*************************************************/
     
 }
-
