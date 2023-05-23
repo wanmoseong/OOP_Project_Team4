@@ -92,7 +92,7 @@ public class StartPage extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new mainPuzzle();
+				new mainPuzzle(3);
 			}
 		});
 		Left.add(btn3x3);
@@ -105,7 +105,7 @@ public class StartPage extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new Puzzle();
+				new mainPuzzle(4);
 			}
 		});
 		Left.add(btn4x4);
@@ -113,9 +113,16 @@ public class StartPage extends JFrame {
 		JButton btn5x5 = new JButton("5x5");
 		btn5x5.setBackground(Color.WHITE);
 		btn5x5.setBounds(100, 310, 200, 50);
-		Left.add(btn5x5);
 		
-		//Right Part. 추후 추가 예정
+		btn5x5.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new mainPuzzle(5);
+			}
+		});
+		Left.add(btn5x5);
+
 		
 		setVisible(true);
 		c.add(Body);
