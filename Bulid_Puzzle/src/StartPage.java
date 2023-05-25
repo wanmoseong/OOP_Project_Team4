@@ -10,6 +10,7 @@ import javax.swing.border.Border;
 public class StartPage extends JFrame {
 	JScrollPane scrollPane;
     ImageIcon iconbody, iconleft, iconright;
+    String ImagePath;
 
     
 	public StartPage() {
@@ -39,11 +40,13 @@ public class StartPage extends JFrame {
 			 protected void paintComponent(Graphics g) {
 				 super.paintComponent(g);
 				 g.drawImage(iconright.getImage(), 0, 0, getWidth(), getHeight(), null);;
-			
 	         }
-		 }; //사진만 넣어놨습니다 이미지 버튼 X
-			
-		
+		 };//사진만 넣어놨습니다 이미지 버튼 X
+		 
+		 
+	    image im = new image(Right);		// 오른쪽 패널에 파일 선택 "열기" 버튼 추가
+	    ImagePath = im.AbsolutePath;		// 이미지의 절대경로를 ImagePath에 저장함.
+	
 		 
 		iconleft = new ImageIcon("startpageex.png"); //이미지 끌고오기
 		JPanel Left = new JPanel() {
@@ -97,6 +100,7 @@ public class StartPage extends JFrame {
 		});
 		Left.add(btn3x3);
 		
+		
 		JButton btn4x4 = new JButton("4x4");
 		btn4x4.setBackground(Color.WHITE);
 		btn4x4.setBounds(100, 240, 200, 50);
@@ -131,7 +135,7 @@ public class StartPage extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new StartPage();
-		
+		StartPage i = new StartPage();
+		System.out.println(i.ImagePath);
 	}
 }
