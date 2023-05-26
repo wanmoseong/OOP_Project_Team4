@@ -189,7 +189,7 @@ public class PicPanel extends JPanel{
 								}
 							}
 							if(isSuccess){
-								JOptionPane.showMessageDialog(null, count+"ȸ ����");
+								JOptionPane.showMessageDialog(null, count+"회");
 								new Thread(){
 									public void run() {
 										try {
