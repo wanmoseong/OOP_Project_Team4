@@ -30,7 +30,7 @@ public class PicPanel extends JPanel{
 	private PicPanel picPanel;
 	private int count=0;
 	
-	public PicPanel(int frameSize,int intiCount) {
+	public PicPanel(int frameSize,int intiCount,String ImagePath) {
 		picPanel=this;
 		frameSize-=50;
 		setPreferredSize(new Dimension(frameSize+2,frameSize+2));
@@ -38,7 +38,7 @@ public class PicPanel extends JPanel{
 		puzzleSize=frameSize/row;
 		ArrayList yList;
 		try {
-			BufferedImage image = ImageIO.read(new File("./Desert.jpg"));
+			BufferedImage image = ImageIO.read(new File(ImagePath));
 			int imageWidth=image.getWidth();
 			int imageHeight=image.getHeight();
 			int imageBeginX=0;
