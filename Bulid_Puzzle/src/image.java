@@ -12,10 +12,8 @@ public class image extends JFrame {
 	
     private JLabel imageLabel;
     protected String AbsolutePath;		// 이미지의 절대경로
-	private Runnable onCompleteCallback;
 
     public image(JPanel Right) {
-    	this.onCompleteCallback = onCompleteCallback;
         // 이미지를 표시할 JLabel 생성
         imageLabel = new JLabel();
         // 이미지를 가운데로 정렬
