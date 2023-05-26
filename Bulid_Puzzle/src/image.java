@@ -43,34 +43,39 @@ public class image extends JFrame {
                         int frameWidth = imageLabel.getWidth();
                         int frameHeight = imageLabel.getHeight();
 
-                        // 이미지의 가로 너비
-                        int imageWidth = originalImage.getWidth();
-                        int imageHeight = originalImage.getHeight();
+                        if (frameWidth > 0 && frameHeight > 0) {
+                            // 이미지의 가로 너비
+                            int imageWidth = originalImage.getWidth();
+                            int imageHeight = originalImage.getHeight();
 
-                        // 이미지를 프레임에 맞게 비율 조정
-                        int scaledWidth, scaledHeight;
-                        if (imageWidth > imageHeight) {
-                            scaledWidth = frameWidth;
-                            scaledHeight = (int) (((double) imageHeight / imageWidth) * frameWidth);
-                        } else {
-                            scaledHeight = frameHeight;
-                            scaledWidth = (int) (((double) imageWidth / imageHeight) * frameHeight);
+                            // 이미지를 프레임에 맞게 비율 조정
+                            int scaledWidth, scaledHeight;
+                            if (imageWidth > imageHeight) {
+                                scaledWidth = frameWidth;
+                                scaledHeight = (int) (((double) imageHeight / imageWidth) * frameWidth);
+                            } else {
+                                scaledHeight = frameHeight;
+                                scaledWidth = (int) (((double) imageWidth / imageHeight) * frameHeight);
+                            }
+
+                            // 비율 조정된 이미지를 생성
+                            Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+
+                            // 조정된 이미지를 JLabel에 표시
+                            ImageIcon icon = new ImageIcon(scaledImage);
+                            imageLabel.setIcon(icon);
                         }
 
-                        // 비율 조정된 이미지를 생성
-                        Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
-
-                        // 조정된 이미지를 JLabel에 표시
-                        ImageIcon icon = new ImageIcon(scaledImage);
-                        imageLabel.setIcon(icon);
                         synchronized (image.this) {
                         	image.this.notify(); // 대기 중인 스레드를 깨움
                         }
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
+                    catch (IllegalArgumentException e1) {
+                        e1.printStackTrace();
+                    }
                 }
-                
             }
         });
         
@@ -86,6 +91,8 @@ public class image extends JFrame {
             try {
             	image.this.wait(); // 파일 선택이 완료될 때까지 대기
             } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             }
         }
