@@ -1,4 +1,3 @@
-package TeamProject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,9 +11,11 @@ import javax.imageio.ImageIO;
 public class image extends JFrame {
 	
     private JLabel imageLabel;
-    private String AbsolutePath;		// 이미지의 절대경로
+    protected String AbsolutePath;		// 이미지의 절대경로
+	private Runnable onCompleteCallback;
 
     public image(JPanel Right) {
+    	this.onCompleteCallback = onCompleteCallback;
         // 이미지를 표시할 JLabel 생성
         imageLabel = new JLabel();
         // 이미지를 가운데로 정렬
@@ -34,6 +35,7 @@ public class image extends JFrame {
                     // 선택한 파일 가져오기
                     File selectedFile = fileChooser.getSelectedFile();
                     AbsolutePath = selectedFile.getAbsolutePath();
+                    System.out.println("select file");
                     // 이미지 로드 및 JLabel에 표시
                     try {
                         // 선택한 이미지 파일을 읽어옴
@@ -63,10 +65,14 @@ public class image extends JFrame {
                         // 조정된 이미지를 JLabel에 표시
                         ImageIcon icon = new ImageIcon(scaledImage);
                         imageLabel.setIcon(icon);
+                        synchronized (image.this) {
+                        	image.this.notify(); // 대기 중인 스레드를 깨움
+                        }
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
                 }
+                
             }
         });
         
@@ -76,15 +82,17 @@ public class image extends JFrame {
         Right.setLayout(new BorderLayout());
         Right.add(openButton);
         Right.add(imageLabel, BorderLayout.CENTER);
-
-        // 프레임 표시
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
-    }
-    
-    String getImageAbsolutePath() {
-    	return AbsolutePath;
+        System.out.println("stop");
+        
+        synchronized (image.this) {
+            try {
+            	image.this.wait(); // 파일 선택이 완료될 때까지 대기
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("continue");
+        
     }
 
 }
