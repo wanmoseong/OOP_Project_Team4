@@ -5,12 +5,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class mainPuzzle extends JFrame {
+public class GameWindow extends JFrame {
 	private TimerPanel timerPanel; // 타이머
     public JPanel p_right;
     ImageIcon icon_p_body, iconleft, iconright;
 
-    public mainPuzzle(int A,String ImagePath) {
+    public GameWindow(int A,String ImagePath) {
     	
     	icon_p_body = new ImageIcon("C:\\Users\\dlthf\\OneDrive\\바탕 화면\\객체지향팀플\\자바 예시 그림\\BodyImage.png"); //이미지 끌고오기
 		 
@@ -47,7 +47,7 @@ public class mainPuzzle extends JFrame {
         String imagePath = ImagePath; // 실제 이미지 파일
         addImageToPanel(imagePath);
 
-        p_body.add(new PicPanel(450,A,imagePath), BorderLayout.WEST);
+        p_body.add(new Game(450,A,imagePath), BorderLayout.WEST);
         p_body.add(p_right, BorderLayout.EAST);
        
         
