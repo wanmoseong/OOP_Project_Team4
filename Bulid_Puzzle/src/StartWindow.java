@@ -7,14 +7,14 @@ import java.awt.event.*;
 import javax.swing.border.Border;
 
 
-public class StartPage extends JFrame {
+public class StartWindow extends JFrame {
 	JScrollPane scrollPane;
     ImageIcon iconbody, iconleft, iconright;
     String ImagePath;
     image im;
 
     
-	public StartPage() {
+	public StartWindow() {
 		 
 		 iconbody = new ImageIcon("Body.png"); //이미지 끌고오기
 		 
@@ -109,21 +109,21 @@ public class StartPage extends JFrame {
 		btn3x3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			dispose();
-			new mainPuzzle(3,im.AbsolutePath);
+			new GameWindow(3,im.AbsolutePath);
 			}
 		});
                 
 		btn4x4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new mainPuzzle(4,im.AbsolutePath);
+				new GameWindow(4,im.AbsolutePath);
 			}
 		});
 		
 		btn5x5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new mainPuzzle(5,im.AbsolutePath);
+				new GameWindow(5,im.AbsolutePath);
 			}
 		});
                 
