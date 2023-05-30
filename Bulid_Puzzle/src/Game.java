@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class PicPanel extends JPanel{
+public class Game extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	private int puzzleSize=0;
@@ -27,10 +27,10 @@ public class PicPanel extends JPanel{
 	private int movePositionX=0;
 	private int movePositionY=0;
 	private String empty="-1";
-	private PicPanel picPanel;
+	private Game picPanel;
 	private int count=0;
 	
-	public PicPanel(int frameSize,int intiCount,String ImagePath) {
+	public Game(int frameSize,int intiCount,String ImagePath) {
 		picPanel=this;
 		frameSize-=50;
 		setPreferredSize(new Dimension(frameSize+2,frameSize+2));
@@ -189,7 +189,7 @@ public class PicPanel extends JPanel{
 								}
 							}
 							if(isSuccess){
-								JOptionPane.showMessageDialog(null, count+"회");
+								JOptionPane.showMessageDialog(null, count+"ȸ ����");
 								new Thread(){
 									public void run() {
 										try {
