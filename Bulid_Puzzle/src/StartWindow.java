@@ -101,33 +101,44 @@ public class StartWindow extends JFrame {
 		c.add(Body);
 		c.setBackground(Color.red);
 		
-		im = new image(Right);			// 오른쪽 패널에 파일 선택 "열기" 버튼 추가 파일 열기 전에는 액션 추가 ㄴㄴ
+		image im = new image(Right);			// 오른쪽 패널에 파일 선택 "열기" 버튼 추가 파일 열기 전에는 액션 추가 ㄴㄴ
+
 		
-		System.out.println("File path selected: " + im.AbsolutePath);		// 경로가 잘 들어갔는지 확인
-		System.out.println("File path selected in main: " + im.AbsolutePath);
-                
 		btn3x3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			dispose();
-			new GameWindow(3,im.AbsolutePath);
+				 if (im.AbsolutePath == null) {
+			            JOptionPane.showMessageDialog(StartWindow.this, "Please select an image file.", "Error", JOptionPane.ERROR_MESSAGE);
+			            return; // 메서드 종료
+			        }
+				ImagePath = im.AbsolutePath;
+				dispose();
+				new GameWindow(3,ImagePath,StartWindow.this);
 			}
 		});
                 
 		btn4x4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (im.AbsolutePath == null) {
+		            JOptionPane.showMessageDialog(StartWindow.this, "Please select an image file.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return; // 메서드 종료
+		        }
+				ImagePath = im.AbsolutePath;
 				dispose();
-				new GameWindow(4,im.AbsolutePath);
+				new GameWindow(4,ImagePath,StartWindow.this);
 			}
 		});
 		
 		btn5x5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (im.AbsolutePath == null) {
+		            JOptionPane.showMessageDialog(StartWindow.this, "Please select an image file.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return; // 메서드 종료
+		        }
+				ImagePath = im.AbsolutePath;
 				dispose();
-				new GameWindow(5,im.AbsolutePath);
+				new GameWindow(5,ImagePath,StartWindow.this);
 			}
 		});
-                
-		System.out.println("first time is sucess");		// 그냥 처음 시작했을 때, 성공은 하는데 뒤로가기 했을 때, 뭔가 꼬임;;
 	   
 	}
 }
