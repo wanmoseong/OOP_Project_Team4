@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,15 +9,14 @@ import javax.imageio.ImageIO;
 
 public class image extends JFrame {
 	
-    private JLabel imageLabel;
+	private JLabel imageLabel;
     protected String AbsolutePath;		// 이미지의 절대경로
-
+    
     public image(JPanel Right) {
         // 이미지를 표시할 JLabel 생성
         imageLabel = new JLabel();
         // 이미지를 가운데로 정렬
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
-
         // "열기" 버튼 생성
         JButton openButton = new JButton("열기");
         openButton.addActionListener(new ActionListener() {
@@ -34,6 +32,7 @@ public class image extends JFrame {
                     File selectedFile = fileChooser.getSelectedFile();
                     AbsolutePath = selectedFile.getAbsolutePath();
                     System.out.println("select file");
+                    
                     // 이미지 로드 및 JLabel에 표시
                     try {
                         // 선택한 이미지 파일을 읽어옴
@@ -43,61 +42,40 @@ public class image extends JFrame {
                         int frameWidth = imageLabel.getWidth();
                         int frameHeight = imageLabel.getHeight();
 
-                        if (frameWidth > 0 && frameHeight > 0) {
-                            // 이미지의 가로 너비
-                            int imageWidth = originalImage.getWidth();
-                            int imageHeight = originalImage.getHeight();
+                        // 이미지의 가로 너비
+                        int imageWidth = originalImage.getWidth();
+                        int imageHeight = originalImage.getHeight();
 
-                            // 이미지를 프레임에 맞게 비율 조정
-                            int scaledWidth, scaledHeight;
-                            if (imageWidth > imageHeight) {
-                                scaledWidth = frameWidth;
-                                scaledHeight = (int) (((double) imageHeight / imageWidth) * frameWidth);
-                            } else {
-                                scaledHeight = frameHeight;
-                                scaledWidth = (int) (((double) imageWidth / imageHeight) * frameHeight);
-                            }
-
-                            // 비율 조정된 이미지를 생성
-                            Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
-
-                            // 조정된 이미지를 JLabel에 표시
-                            ImageIcon icon = new ImageIcon(scaledImage);
-                            imageLabel.setIcon(icon);
+                        // 이미지를 프레임에 맞게 비율 조정
+                        int scaledWidth, scaledHeight;
+                        if (imageWidth > imageHeight) {
+                            scaledWidth = frameWidth;
+                            scaledHeight = (int) (((double) imageHeight / imageWidth) * frameWidth);
+                        } else {
+                            scaledHeight = frameHeight;
+                            scaledWidth = (int) (((double) imageWidth / imageHeight) * frameHeight);
                         }
 
-                        synchronized (image.this) {
-                        	image.this.notify(); // 대기 중인 스레드를 깨움
-                        }
+                        // 비율 조정된 이미지를 생성
+                        Image scaledImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+
+                        // 조정된 이미지를 JLabel에 표시
+                        ImageIcon icon = new ImageIcon(scaledImage);
+                        imageLabel.setIcon(icon);
+
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
-                    catch (IllegalArgumentException e1) {
-                        e1.printStackTrace();
-                    }
                 }
+                
             }
         });
         
-       
         openButton.setBounds(10, 10, 70, 30);
         // 프레임에 컴포넌트 추가
         Right.setLayout(new BorderLayout());
         Right.add(openButton);
         Right.add(imageLabel, BorderLayout.CENTER);
-        System.out.println("stop");
-        
-        synchronized (image.this) {
-            try {
-            	image.this.wait(); // 파일 선택이 완료될 때까지 대기
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("continue");
         
     }
-
 }
