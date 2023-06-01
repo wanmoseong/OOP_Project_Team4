@@ -10,18 +10,17 @@ public class GameWindow extends JFrame {
     public JPanel p_right;
     ImageIcon icon_p_body, iconleft, iconright;
 
-    public GameWindow(int A,String ImagePath) {
+    public GameWindow(int A,String ImagePath,StartWindow p) {
     	
     	icon_p_body = new ImageIcon("C:\\Users\\dlthf\\OneDrive\\바탕 화면\\객체지향팀플\\자바 예시 그림\\BodyImage.png"); //이미지 끌고오기
 		 
 		 JPanel p_body = new JPanel() { 
 			 
-			 protected void paintComponent(Graphics g) {
-				 super.paintComponent(g);
-				 g.drawImage(icon_p_body.getImage(), 0, 0, getWidth(), getHeight(), null);
-			
-	         }
-		 };
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(icon_p_body.getImage(), 0, 0, getWidth(), getHeight(), null);
+	        }
+		};
     	
         setTitle("Team4 Puzzle");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
@@ -30,11 +29,7 @@ public class GameWindow extends JFrame {
         Container c = getContentPane();
 
         timerPanel = new TimerPanel();
-        
-
-
-        
-        
+                
         // 가운데
         p_right = new JPanel(); // p_right = 힌트 사진
         JPanel p_left = new JPanel(); // p_left = 실행화면
@@ -63,19 +58,20 @@ public class GameWindow extends JFrame {
         p_body.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
 	
 		
-		//JButton back = new JButton("뒤로가기");
-		//back.setBounds(230, 450, 80, 30);
+        JButton back = new JButton("뒤로가기");
+		back.setBounds(230, 450, 80, 30);
 
-		//back.addActionListener(new ActionListener() {
+		back.addActionListener(new ActionListener() {
 
-			//public void actionPerformed(ActionEvent e) {
-				//dispose();
-				///new StartPage();
-			//}
-		//});
-		//p_body.add(back);
-		
-		
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				StartWindow startpage = new StartWindow();
+				startpage.setVisible(false);
+				startpage = p;
+				startpage.setVisible(true);
+			}
+		});
+		p_body.add(back);
 		
 		JButton exitButton = new JButton("종료");
 		exitButton.setBounds(350, 450, 80, 30);
