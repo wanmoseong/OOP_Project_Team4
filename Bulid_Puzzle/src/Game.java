@@ -100,43 +100,43 @@ public class Game extends JPanel{
 		}
 		
 		
-		addMouseListener(new MouseListener() {
+		addMouseListener(new MouseListener(){
+	         public void mousePressed(MouseEvent arg0) {
+	            int x=arg0.getX()/puzzleSize;
+	            int y=arg0.getY()/puzzleSize;
+	            if(x<row&&y<row){ 
+	               moveX=x;
+	               moveY=y;
+	               movePositionX=0;
+	               movePositionY=0;
+	               if(emptyX==moveX-1&&emptyY==moveY){
+	               }else if(emptyX==moveX+1&&emptyY==moveY){
+	               }else if(emptyX==moveX&&emptyY==moveY-1){
+	               }else if(emptyX==moveX&&emptyY==moveY+1){
+	               }else{
+	                  moveX=-1;
+	                  moveY=-1;
+	               }
+	               repaint(); 
+	            }
+	         }
+
+	         public void mouseClicked(MouseEvent e) {
+	            
+	         }
+
+	         public void mouseReleased(MouseEvent e) {
+	            
+	         }
+
+	         public void mouseEntered(MouseEvent e) {
+	          
+	         }
 			
-			public void mouseReleased(MouseEvent arg0) {
-			}
-			
-			public void mousePressed(MouseEvent arg0) {
-			}
-			
-			public void mouseExited(MouseEvent arg0) {
-			}
-			
-			public void mouseEntered(MouseEvent arg0) {
-			}
-			
-			public void mouseClicked(MouseEvent arg0) {
-				int x=arg0.getX()/puzzleSize;
-				int y=arg0.getY()/puzzleSize;
-				if(x<row&&y<row){
-					moveX=x;
-					moveY=y;
-					movePositionX=0;
-					movePositionY=0;
-					if(emptyX==moveX-1&&emptyY==moveY){
-					}else if(emptyX==moveX+1&&emptyY==moveY){
-					}else if(emptyX==moveX&&emptyY==moveY-1){
-					}else if(emptyX==moveX&&emptyY==moveY+1){
-					}else{
-						moveX=-1;
-						moveY=-1;
-					}
-					repaint();
-				}
-				
-				
-					
-			}
-		});
+	         public void mouseExited(MouseEvent e) {
+	            
+	         }
+	         });
 	}
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
