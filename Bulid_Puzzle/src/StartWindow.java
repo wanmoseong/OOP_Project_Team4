@@ -1,144 +1,184 @@
-
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
-import java.awt.event.*;
-import javax.swing.border.Border;
-
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class StartWindow extends JFrame {
-	JScrollPane scrollPane;
-    ImageIcon iconbody, iconleft, iconright;
-    String ImagePath;
-    image im;
+    private String imagePath;
+    private JLabel previewLabel;
 
-    
-	public StartWindow() {
-		 
-		 iconbody = new ImageIcon("Body.png"); //이미지 끌고오기
-		 
-		 JPanel Body = new JPanel() { 
-			 
-			 protected void paintComponent(Graphics g) {
-				 super.paintComponent(g);
-				 g.drawImage(iconbody.getImage(), 0, 0, getWidth(), getHeight(), null);
-			
-	         }
-		 };
-		 
-	
-		setTitle("Team4 Puzzle");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(900, 450);
-		setLocationRelativeTo(null); //실행하면 중앙에 위치 함 
+    public StartWindow() {
+        setTitle("Team4 Puzzle");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(900, 450);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        getContentPane().setBackground(Color.YELLOW);
 
-		Container c = getContentPane();
-		
-		iconright = new ImageIcon("rightstartex.png"); //이미지 끌고오기
-		
-		JPanel Right = new JPanel() {
-			 protected void paintComponent(Graphics g) {
-				 super.paintComponent(g);
-				 g.drawImage(iconright.getImage(), 0, 0, getWidth(), getHeight(), null);;
-	         }
-		 };//사진만 넣어놨습니다 이미지 버튼 X
-	
-		 
-		iconleft = new ImageIcon("startpageex.png"); //이미지 끌고오기
-		JPanel Left = new JPanel() {
-			protected void paintComponent(Graphics g) {
-				 super.paintComponent(g);
-				 g.drawImage(iconleft.getImage(), 0, 0, getWidth(), getHeight(), null);;
-		
-	         }
-		 };
-		
-		Body.add(Left, BorderLayout.WEST);
-		Body.add(Right, BorderLayout.EAST);
-		
-		
-		Left.setBackground(Color.WHITE); //패널 색상
-		Left.setPreferredSize(new Dimension(400,400));	//패널 크기
-		Left.setAlignmentY(JLabel.CENTER_ALIGNMENT); //패널이 항상 중앙맞춤
-		
-		
-		
-		Right.setBackground(Color.WHITE); //패널 색상
-		Right.setPreferredSize(new Dimension(400,400)); //패널 크기
-		Right.setAlignmentY(JLabel.CENTER_ALIGNMENT); //패널이 항상 중앙맞춤
-		
-		Font font = new Font("G마켓 산스 TTF Bold", Font.BOLD, 16); //폰트 모양 안돌아가면 Arial 로 일단 바꾸시면 됩니다
-		Font font1 = new Font("G마켓 산스 TTF Bold", Font.BOLD, 30); //난이도 설정 폰트
-		UIManager.put("Button.font", font);
-		UIManager.put("Label.font", font);
-		// 필요한 다른 컴포넌트에 대해서도 폰트 설
-		
-		//Left Part.
-		Left.setLayout(null);
-		
-		
-		//밑은 난이도 버튼 
-		
-		JButton btn3x3 = new JButton("3x3");
-		btn3x3.setBackground(Color.WHITE);
-		btn3x3.setBounds(100, 170, 200, 50);
-		Left.add(btn3x3);
-		
-		
-		JButton btn4x4 = new JButton("4x4");
-		btn4x4.setBackground(Color.WHITE);
-		btn4x4.setBounds(100, 240, 200, 50);
-		Left.add(btn4x4);
-		
-		JButton btn5x5 = new JButton("5x5");
-		btn5x5.setBackground(Color.WHITE);
-		btn5x5.setBounds(100, 310, 200, 50);
-		Left.add(btn5x5);
+        // Left 패널 생성
+        JPanel leftPanel = new JPanel();
+        leftPanel.setBackground(Color.WHITE);
+        leftPanel.setPreferredSize(new Dimension(400, 400));
+        leftPanel.setLayout(null); // Absolute Layout
+        // 제목 라벨
+        JLabel titleLabel = new JLabel("SLIDE PUZZLE");
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setBounds(100, 65, 200, 30);
+        titleLabel.setForeground(Color.WHITE); // 글꼴 색상을 흰색으로 설정
+        leftPanel.add(titleLabel);
 
-		
-		setVisible(true);
-		c.add(Body);
-		c.setBackground(Color.red);
-		
-		image im = new image(Right);			// 오른쪽 패널에 파일 선택 "열기" 버튼 추가 파일 열기 전에는 액션 추가 ㄴㄴ
+        // 도형 패널
+        JPanel shapePanel = new JPanel() {
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // 도형 그리기
+                g.setColor(Color.YELLOW);
+                g.drawRect(105, 50, 50, 50);
+                g.setColor(Color.YELLOW);
+                g.drawRect(70, 30, 100, 100);
+                g.setColor(Color.YELLOW);
+                g.drawRect(265, 58, 20, 20);
+                g.setColor(Color.YELLOW);
+                g.drawOval(90, 170, 20, 20);
+                g.setColor(Color.YELLOW);
+                g.drawOval(90, 220, 20, 20);
+                g.setColor(Color.YELLOW);
+                g.drawOval(90, 270, 20, 20);
+                g.setColor(Color.YELLOW);
+                g.drawRect(10, 370, 200, 20);
+                g.setColor(Color.YELLOW);
+                g.drawRect(30, 375, 200, 20);
+                g.setColor(Color.YELLOW);
+                g.drawRect(300, 370, 20, 20);
+                g.setColor(Color.YELLOW);
+                g.drawRect(305, 360, 20, 20);
+                g.setColor(Color.YELLOW);
+                g.drawRect(320, 340, 30, 30);
+                g.setColor(Color.YELLOW);
+                g.drawRect(340, 310, 40, 40);
+               
+            }
+        };
+        shapePanel.setBackground(Color.BLACK);
+        shapePanel.setBounds(5, 6, 700, 400);
+        leftPanel.add(shapePanel);
 
-		
-		btn3x3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				 if (im.AbsolutePath == null) {
-			            JOptionPane.showMessageDialog(StartWindow.this, "Please select an image file.", "Error", JOptionPane.ERROR_MESSAGE);
-			            return; // 메서드 종료
-			        }
-				ImagePath = im.AbsolutePath;
-				dispose();
-				new GameWindow(3,ImagePath,StartWindow.this);
-			}
-		});
-                
-		btn4x4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (im.AbsolutePath == null) {
-		            JOptionPane.showMessageDialog(StartWindow.this, "Please select an image file.", "Error", JOptionPane.ERROR_MESSAGE);
-		            return; // 메서드 종료
-		        }
-				ImagePath = im.AbsolutePath;
-				dispose();
-				new GameWindow(4,ImagePath,StartWindow.this);
-			}
-		});
-		
-		btn5x5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (im.AbsolutePath == null) {
-		            JOptionPane.showMessageDialog(StartWindow.this, "Please select an image file.", "Error", JOptionPane.ERROR_MESSAGE);
-		            return; // 메서드 종료
-		        }
-				ImagePath = im.AbsolutePath;
-				dispose();
-				new GameWindow(5,ImagePath,StartWindow.this);
-			}
-		});
-	   
-	}
+        // 버튼 패널
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.WHITE);
+        buttonPanel.setLayout(null);
+        buttonPanel.setBounds(130, 170, 150, 150);
+
+        JButton btn3x3 = new JButton("3x3");
+        btn3x3.setBackground(Color.WHITE);
+        btn3x3.setBounds(0, 0, 130, 30);
+        buttonPanel.add(btn3x3);
+
+        JButton btn4x4 = new JButton("4x4");
+        btn4x4.setBackground(Color.WHITE);
+        btn4x4.setBounds(0, 50, 130, 30);
+        buttonPanel.add(btn4x4);
+
+        JButton btn5x5 = new JButton("5x5");
+        btn5x5.setBackground(Color.WHITE);
+        btn5x5.setBounds(0, 100, 130, 30);
+        buttonPanel.add(btn5x5);
+
+        leftPanel.add(buttonPanel);
+
+        add(leftPanel, BorderLayout.WEST);
+
+        // Right 패널 생성
+        JPanel rightPanel = new JPanel();
+        rightPanel.setBackground(Color.BLACK);
+        rightPanel.setPreferredSize(new Dimension(400, 400));
+        rightPanel.setLayout(new BorderLayout());
+
+        JButton openButton = new JButton("Open");
+        openButton.setBackground(Color.BLACK);
+        openButton.setForeground(Color.WHITE);
+        openButton.setPreferredSize(new Dimension(100, 50)); // 버튼의 크기를 수동으로 조절
+        openButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                int result = fileChooser.showOpenDialog(StartWindow.this);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    imagePath = fileChooser.getSelectedFile().getAbsolutePath();
+                    System.out.println("File path selected: " + imagePath);
+                    updatePreviewImage();
+                }
+            }
+        });
+        rightPanel.add(openButton, BorderLayout.CENTER);
+
+        previewLabel = new JLabel();
+        previewLabel.setHorizontalAlignment(JLabel.CENTER);
+        previewLabel.setPreferredSize(new Dimension(300, 300));
+        rightPanel.add(previewLabel, BorderLayout.NORTH);
+
+        add(rightPanel, BorderLayout.EAST);
+
+        btn3x3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    dispose();
+                    new GameWindow(3, imagePath, StartWindow.this);
+                } else {
+                    JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
+                            "Image Not Selected", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+        btn4x4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    dispose();
+                    new GameWindow(4, imagePath, StartWindow.this);
+                } else {
+                    JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
+                            "Image Not Selected", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+        btn5x5.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    dispose();
+                    new GameWindow(5, imagePath, StartWindow.this);
+                } else {
+                    JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
+                            "Image Not Selected", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+        setVisible(true);
+    }
+
+    private void updatePreviewImage() {
+        try {
+            BufferedImage image = ImageIO.read(new File(imagePath));
+            Image scaledImage = image.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+            previewLabel.setIcon(new ImageIcon(scaledImage));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                StartWindow startWindow = new StartWindow();
+                startWindow.setVisible(true);
+            }
+        });
+    }
 }
+
