@@ -1,51 +1,38 @@
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JButton;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TimerLabel extends JPanel {
-    private JLabel timeLabel;
-    private Thread th;
-    private JButton startButton;
+	private JLabel timeLabel;
+	public Thread th;
+	public int sec;
 
-    public TimerLabel() {
-        JLabel timerLabel3 = new JLabel("걸린 시간: ");
-        JLabel timerLabel2 = new JLabel("초");
-        timeLabel = new JLabel();
-        startButton = new JButton("시작");
+	public TimerLabel() {
+		JLabel timerLabel3 = new JLabel("걸린 시간: ");
+		JLabel timerLabel2 = new JLabel("초");
+		timeLabel = new JLabel();
 
-        TimerRunnable runnable = new TimerRunnable(timeLabel);
-        th = new Thread(runnable); // 스레드 생성
+		TimerRunnable runnable = new TimerRunnable(timeLabel);
+		th = new Thread(runnable); // 스레드 생성
+		
+		sec = runnable.n;
+		th.start(); // 스레드 동작시킴
 
-        startButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                startTimer(); // 시작 버튼 클릭 시 타이머 시작
-            }
-        });
+		add(timerLabel3);
+		add(timeLabel);
+		add(timerLabel2);
+	}
 
-        add(timerLabel3);
-        add(timeLabel);
-        add(timerLabel2);
-        add(startButton);
-    }
+	public JLabel getTimeLabel() {
+		return timeLabel;
+	}
 
-    public JLabel getTimeLabel() {
-        return timeLabel;
-    }
+	public void resetTimer() {
+		if (th != null && th.isAlive()) {
+			th.interrupt(); // 기존의 타이머 스레드 중단
+		}
+		th = new Thread(new TimerRunnable(timeLabel)); // 새로운 타이머 스레드 생성
+		th.start(); // 새로운 타이머 스레드 시작
+	}
 
-    public void startTimer() {
-        if (!th.isAlive()) {
-            th = new Thread(new TimerRunnable(timeLabel)); // 새로운 타이머 스레드 생성
-            th.start(); // 타이머 스레드 시작
-        }
-    }
-
-    public void resetTimer() {
-        if (th != null && th.isAlive()) {
-            th.interrupt(); // 기존의 타이머 스레드 중단
-        }
-        timeLabel.setText(""); // 타이머 레이블 초기화
-    }
 }
