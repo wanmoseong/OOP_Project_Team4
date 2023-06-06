@@ -34,10 +34,11 @@ public class Game extends JPanel {
 	private int seconds;
 	private TimerRunnable sec = new TimerRunnable();
 	private Thread time = new Thread(sec);
+	private TimerLabel timer ;
+	public boolean stop = false;
 	
-	public Game(int frameSize, int intiCount, String ImagePath) {
-		time.start();
-		System.out.println(sec.getSeconds());
+	public Game(int frameSize, int intiCount, String ImagePath, TimerLabel tl) {
+		this.timer = tl;
 		
 		picPanel = this;
 		frameSize -= 50;
@@ -233,8 +234,9 @@ public class Game extends JPanel {
 								}
 							}
 							if (isSuccess) {
-								JOptionPane.showMessageDialog(null,"경과");
-									
+								stop = true;
+								timer.th.interrupt();
+								JOptionPane.showMessageDialog(null,"성공");
 							}
 						}
 
