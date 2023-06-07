@@ -6,8 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class GameWindow extends JFrame {
-	private TimerPanel timerPanel; // 타이머
+	private TimerLabel timerPanel; // 타이머
     public JPanel p_right;
+    public Game start;
     ImageIcon icon_p_body, iconleft, iconright;
 
     public GameWindow(int A,String ImagePath,StartWindow p) {
@@ -28,33 +29,30 @@ public class GameWindow extends JFrame {
         setLocationRelativeTo(null); //실행하면 중앙에 위치 함 
         Container c = getContentPane();
 
-        timerPanel = new TimerPanel();
+        timerPanel = new TimerLabel();
                 
         // 가운데
         p_right = new JPanel(); // p_right = 힌트 사진
         JPanel p_left = new JPanel(); // p_left = 실행화면
+        p_left.setPreferredSize(new Dimension(400,400));
         
         p_right.setPreferredSize(new Dimension(400, 400));
         p_right.setBackground(Color.WHITE);
-        //p_left.setPreferredSize(new Dimension(400, 400));
-        //p_left.setBackground(Color.WHITE);
         
         String imagePath = ImagePath; // 실제 이미지 파일
         addImageToPanel(imagePath);
-
-        p_body.add(new Game(450,A,imagePath), BorderLayout.WEST);
-        p_body.add(p_right, BorderLayout.EAST);
-       
         
+        
+        start = new Game(450,A,imagePath,timerPanel);
+        p_left.add(start);
+        
+        p_body.add(p_left, BorderLayout.WEST);
+        p_body.add(p_right, BorderLayout.EAST);
         p_body.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
-        
-        
         setVisible(true);
         c.add(p_body, BorderLayout.CENTER);
-        
         setVisible(true);
-
         p_body.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
 	
 		
@@ -83,14 +81,21 @@ public class GameWindow extends JFrame {
 		});
 		p_body.add(exitButton);
 
-		JButton resetButton = new JButton("시간 초기화");
+		JButton resetButton = new JButton("초기화");
 		resetButton.setBounds(100, 450, 80, 30);
 
 		resetButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	  timerPanel.resetTimer();
-            }
-        });
+		    public void actionPerformed(ActionEvent e) {
+		    	p_left.removeAll();
+		        start = new Game(450, A, imagePath, timerPanel);
+		        p_left.add(start);
+		        timerPanel.resetTimer();
+		        p_left.revalidate();
+		        p_left.repaint();
+		    }
+		});
+
+
 
 		p_body.add(resetButton);
 		p_body.add(timerPanel);
