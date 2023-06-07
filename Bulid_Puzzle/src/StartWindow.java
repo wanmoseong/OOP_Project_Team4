@@ -1,11 +1,27 @@
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.ImageIcon;
+
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class StartWindow extends JFrame {
     private String imagePath;
@@ -61,7 +77,6 @@ public class StartWindow extends JFrame {
                 g.drawRect(320, 340, 30, 30);
                 g.setColor(Color.YELLOW);
                 g.drawRect(340, 310, 40, 40);
-               
             }
         };
         shapePanel.setBackground(Color.BLACK);
@@ -72,7 +87,7 @@ public class StartWindow extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
         buttonPanel.setLayout(null);
-        buttonPanel.setBounds(130, 170, 150, 150);
+        buttonPanel.setBounds(140, 170, 150, 150);
 
         JButton btn3x3 = new JButton("3x3");
         btn3x3.setBackground(Color.WHITE);
@@ -90,6 +105,26 @@ public class StartWindow extends JFrame {
         buttonPanel.add(btn5x5);
 
         leftPanel.add(buttonPanel);
+
+        // 상, 중, 하 버튼 패널
+        JPanel positionButtonPanel = new JPanel();
+        positionButtonPanel.setBackground(Color.WHITE);
+        positionButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        positionButtonPanel.setBounds(90, 90, 380, 100);
+
+        JButton topButton = new JButton("상");
+        topButton.setBackground(Color.WHITE);
+        positionButtonPanel.add(topButton);
+
+        JButton middleButton = new JButton("중");
+        middleButton.setBackground(Color.WHITE);
+        positionButtonPanel.add(middleButton);
+
+        JButton bottomButton = new JButton("하");
+        bottomButton.setBackground(Color.WHITE);
+        positionButtonPanel.add(bottomButton);
+
+        leftPanel.add(positionButtonPanel);
 
         add(leftPanel, BorderLayout.WEST);
 
@@ -158,6 +193,28 @@ public class StartWindow extends JFrame {
                 }
             }
         });
+        
+        //마우스리스너
+        topButton.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("The top button has been clicked.");
+                // 여기에 상 버튼 클릭 시 동작하는 내용을 추가
+            }
+        });
+
+        middleButton.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("The middle button has been clicked");
+                // 여기에 중 버튼 클릭 시 동작하는 내용을 추가
+            }
+        });
+
+        bottomButton.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("The bottom button has been clicked");
+                // 여기에 하 버튼 클릭 시 동작하는 내용을 추가
+            }
+        });
 
         setVisible(true);
     }
@@ -181,4 +238,3 @@ public class StartWindow extends JFrame {
         });
     }
 }
-
