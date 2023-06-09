@@ -117,15 +117,15 @@ public class StartWindow extends JFrame {
         bottomButton.setBackground(Color.WHITE);
         bottomButton.setBounds(320,105,50,30);
         shapePanel.add(bottomButton);
+        
+        BgVolumeSlider volumeSlider = new BgVolumeSlider();
+        volumeSlider.setBounds(110,320,200,50);
+        volumeSlider.setBgMusic(bgmusic);
+        shapePanel.add(volumeSlider);
 
         leftPanel.add(shapePanel);
 
         add(leftPanel, BorderLayout.WEST);
-
-        BgVolumeSlider volumeSlider = new BgVolumeSlider();
-        leftPanel.add(volumeSlider);
-        volumeSlider.setBounds(100,320,200,50);
-        volumeSlider.setBgMusic(bgmusic);
 
         // Right 패널 생성
         JPanel rightPanel = new JPanel();
