@@ -1,3 +1,4 @@
+
 import java.util.*;
 
 import java.awt.Dimension;
@@ -16,7 +17,6 @@ import javax.swing.JPanel;
 
 public class Game extends JPanel {
 
-	private static final long serialVersionUID = 1L;
 	private int puzzleSize = 0;
 	private int row = 0;
 	private ArrayList xList = new ArrayList();
@@ -31,18 +31,18 @@ public class Game extends JPanel {
 	private Game picPanel;
 	private int count = 0;
 	private int rowSize = 0;
-	private int seconds;
-	private TimerRunnable sec = new TimerRunnable();
-	private Thread time = new Thread(sec);
 	private TimerLabel timer ;
 	public boolean stop = false;
 	private int level;
-	public static BgMusic bgmusic;
-	
-	public Game(int frameSize, int intiCount, String ImagePath, TimerLabel tl, int level) {
+	private StartWindow p;
+	private GameWindow G;
+
+	public Game(int frameSize, int intiCount, String ImagePath, TimerLabel tl, int level,StartWindow p,GameWindow G) {
 		this.timer = tl;
 		this.level = level;
-		
+		this.p = p;
+		this.G = G;
+
 		picPanel = this;
 		frameSize -= 50;
 		setPreferredSize(new Dimension(frameSize + 2, frameSize + 2));
@@ -115,15 +115,15 @@ public class Game extends JPanel {
 				}
 				int cnt = 0;
 				for (int i = 0; i < row; i++) {
-				    ArrayList<String> sublist = (ArrayList<String>) xList.get(i);
-				    for (int j = 0; j < row; j++) {
-				        String element = sublist.get(j);
-				        if (element.equals("-1")) break;
-				        arr[cnt++] = Integer.parseInt(element);
-				    }
+					ArrayList<String> sublist = (ArrayList<String>) xList.get(i);
+					for (int j = 0; j < row; j++) {
+						String element = sublist.get(j);
+						if (element.equals("-1")) break;
+						arr[cnt++] = Integer.parseInt(element);
+					}
 				}
-				
-				int inversion = 0;				
+
+				int inversion = 0;
 				for(int i = 0; i < arr.length-1; i++) {
 					int temp = arr[i];
 					System.out.println("temp : "+temp);
@@ -134,7 +134,7 @@ public class Game extends JPanel {
 					System.out.println("inversion : "+inversion);
 				}
 				System.out.println(Arrays.toString(arr));
-				
+
 				//난이도 하
 				if(level == 1) {
 					if(row == 3 && inversion == 7) break;
@@ -146,7 +146,7 @@ public class Game extends JPanel {
 					if(row == 3 && inversion == 13) break;
 					else if(row == 4 && inversion == 51) break;
 					else if(row == 5 && inversion == 137) break;
-				} 
+				}
 				//난이도 상
 				else if(level == 3) {
 					if(row == 3 && inversion == 21) break;
@@ -240,7 +240,7 @@ public class Game extends JPanel {
 									if (tempx == emptyX && tempy == emptyX) {
 									} else if (Integer
 											.parseInt((String) ((ArrayList) xList.get(tempx)).get(tempy)) == tempx
-													+ tempy * row) {
+											+ tempy * row) {
 									} else {
 										isSuccess = false;
 										break;
@@ -254,11 +254,18 @@ public class Game extends JPanel {
 							if (isSuccess) {
 								stop = true;
 								timer.th.interrupt();
-								JOptionPane.showMessageDialog(null,"성공");
+								JOptionPane.showMessageDialog(null,"성공","알림",JOptionPane.INFORMATION_MESSAGE);
+
 								String ClearAudioFilePath = "audio/KirbyClear.wav";
 								BgMusic ClearMusic = new BgMusic(ClearAudioFilePath);
-						
+
 								ClearMusic.playClear(); //성공 브금 재생
+
+								G.dispose();
+								StartWindow startpage = new StartWindow();
+								startpage.setVisible(false);
+								startpage = p;
+								startpage.setVisible(true);
 							}
 						}
 
