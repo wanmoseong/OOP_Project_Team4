@@ -11,7 +11,7 @@ public class GameWindow extends JFrame {
     public Game start;
     ImageIcon icon_p_body, iconleft, iconright;
 
-    public GameWindow(int A,String ImagePath,StartWindow p) {
+    public GameWindow(int A,String ImagePath,StartWindow p, int level) {
     	
     	icon_p_body = new ImageIcon("C:\\Users\\dlthf\\OneDrive\\바탕 화면\\객체지향팀플\\자바 예시 그림\\BodyImage.png"); //이미지 끌고오기
 		 
@@ -43,7 +43,7 @@ public class GameWindow extends JFrame {
         addImageToPanel(imagePath);
         
         
-        start = new Game(450,A,imagePath,timerPanel);
+        start = new Game(450,A,imagePath,timerPanel, level);
         p_left.add(start);
         
         p_body.add(p_left, BorderLayout.WEST);
@@ -87,7 +87,7 @@ public class GameWindow extends JFrame {
 		resetButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	p_left.removeAll();
-		        start = new Game(450, A, imagePath, timerPanel);
+		        start = new Game(450, A, imagePath, timerPanel, level);
 		        p_left.add(start);
 		        timerPanel.resetTimer();
 		        p_left.revalidate();
