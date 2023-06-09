@@ -21,8 +21,14 @@ public class StartWindow extends JFrame {
     private String imagePath;
     private JLabel previewLabel;
     private int level;
+    public static BgMusic bgmusic;
+    private BgVolumeSlider volumeSlider;
 
     public StartWindow() {
+    	{
+     		 loadAudio();
+     	     startAudio();
+     		}
 
         setTitle("Team4 Puzzle");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -103,13 +109,7 @@ public class StartWindow extends JFrame {
         btn5x5.setBounds(140, 265, 150, 30);
         shapePanel.add(btn5x5);
 
-        // 상, 중, 하 버튼 패널
-        /*
-        JPanel positionButtonPanel = new JPanel();
-        positionButtonPanel.setBackground(Color.WHITE);
-        positionButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        positionButtonPanel.setBounds(90, 90, 380, 100);
-         */
+  
 
         JButton topButton = new JButton("상");
         topButton.setBackground(Color.WHITE);
@@ -130,6 +130,10 @@ public class StartWindow extends JFrame {
 
         add(leftPanel, BorderLayout.WEST);
 
+        BgVolumeSlider volumeSlider = new BgVolumeSlider();
+		leftPanel.add(volumeSlider);
+		volumeSlider.setBounds(100,320,200,50);
+		volumeSlider.setBgMusic(bgmusic);
         // Right 패널 생성
         JPanel rightPanel = new JPanel();
         rightPanel.setBackground(Color.BLACK);
@@ -166,7 +170,7 @@ public class StartWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (imagePath != null &&level!=0) {
                     dispose();
-                    new GameWindow(3, imagePath, StartWindow.this, level);
+                    new GameWindow(3, imagePath, StartWindow.this, level,bgmusic);
                 }
                 else if(imagePath != null&&level!=0) {
                     JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
@@ -186,7 +190,7 @@ public class StartWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (imagePath != null && level!=0) {
                     dispose();
-                    new GameWindow(4, imagePath, StartWindow.this, level);
+                    new GameWindow(4, imagePath, StartWindow.this, level,bgmusic);
                 }
                 else if(imagePath != null&&level!=0) {
                     JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
@@ -206,7 +210,7 @@ public class StartWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (imagePath != null&&level!=0) {
                     dispose();
-                    new GameWindow(5, imagePath, StartWindow.this, level);
+                    new GameWindow(5, imagePath, StartWindow.this, level,bgmusic);
                 }
                 else if(imagePath != null&&level!=0) {
                     JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
@@ -249,6 +253,28 @@ public class StartWindow extends JFrame {
 
         setVisible(true);
     }
+    public void loadAudio() {
+     	String audioFilePath = "audio/SSKirby.wav";
+     	bgmusic = new BgMusic(audioFilePath);
+     	
+     }
+
+     public void startAudio() {
+         if (bgmusic != null) {
+         	bgmusic.play();
+         }
+     }
+
+     public void stopAudio() {
+         if (bgmusic != null) {
+         	bgmusic.stop();
+         }
+     }
+     public void adjustVolume(int volume) {
+         if (bgmusic != null) {
+             
+         }
+     }
     private void updatePreviewImage() {
         try {
             BufferedImage image = ImageIO.read(new File(imagePath));
