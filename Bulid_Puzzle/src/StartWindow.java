@@ -1,7 +1,7 @@
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -21,11 +21,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-// import javax.swing.*; 로 간단하게 가능
+import javax.swing.SwingUtilities;
 
 public class StartWindow extends JFrame {
     private String imagePath;
     private JLabel previewLabel;
+    private int level;
 
     public StartWindow() {
         setTitle("Team4 Puzzle");
@@ -40,7 +41,6 @@ public class StartWindow extends JFrame {
         leftPanel.setBackground(Color.WHITE);
         leftPanel.setPreferredSize(new Dimension(400, 400));
         leftPanel.setLayout(null); // Absolute Layout
-
         // 제목 라벨
         JLabel titleLabel = new JLabel("SLIDE PUZZLE");
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -81,56 +81,51 @@ public class StartWindow extends JFrame {
             }
         };
         shapePanel.setBackground(Color.BLACK);
-        shapePanel.setLayout(null);
         shapePanel.setBounds(5, 6, 700, 400);
+        leftPanel.add(shapePanel);
 
         // 버튼 패널
-        /*
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(new Color(255,0,0,0));
+        buttonPanel.setBackground(Color.WHITE);
         buttonPanel.setLayout(null);
         buttonPanel.setBounds(140, 170, 150, 150);
-         */
 
         JButton btn3x3 = new JButton("3x3");
         btn3x3.setBackground(Color.WHITE);
-        btn3x3.setBounds(140, 165, 150, 30);
-        shapePanel.add(btn3x3);
+        btn3x3.setBounds(0, 0, 130, 30);
+        buttonPanel.add(btn3x3);
 
         JButton btn4x4 = new JButton("4x4");
         btn4x4.setBackground(Color.WHITE);
-        btn4x4.setBounds(140, 215, 150, 30);
-        shapePanel.add(btn4x4);
+        btn4x4.setBounds(0, 50, 130, 30);
+        buttonPanel.add(btn4x4);
 
         JButton btn5x5 = new JButton("5x5");
         btn5x5.setBackground(Color.WHITE);
-        btn5x5.setBounds(140, 265, 150, 30);
-        shapePanel.add(btn5x5);
+        btn5x5.setBounds(0, 100, 130, 30);
+        buttonPanel.add(btn5x5);
+
+        leftPanel.add(buttonPanel);
 
         // 상, 중, 하 버튼 패널
-        /*
         JPanel positionButtonPanel = new JPanel();
         positionButtonPanel.setBackground(Color.WHITE);
         positionButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         positionButtonPanel.setBounds(90, 90, 380, 100);
-         */
 
         JButton topButton = new JButton("상");
         topButton.setBackground(Color.WHITE);
-        topButton.setBounds(200,105,50,30);
-        shapePanel.add(topButton);
+        positionButtonPanel.add(topButton);
 
         JButton middleButton = new JButton("중");
         middleButton.setBackground(Color.WHITE);
-        middleButton.setBounds(260,105,50,30);
-        shapePanel.add(middleButton);
+        positionButtonPanel.add(middleButton);
 
         JButton bottomButton = new JButton("하");
         bottomButton.setBackground(Color.WHITE);
-        bottomButton.setBounds(320,105,50,30);
-        shapePanel.add(bottomButton);
+        positionButtonPanel.add(bottomButton);
 
-        leftPanel.add(shapePanel);
+        leftPanel.add(positionButtonPanel);
 
         add(leftPanel, BorderLayout.WEST);
 
@@ -143,12 +138,10 @@ public class StartWindow extends JFrame {
         JButton openButton = new JButton("Open");
         openButton.setBackground(Color.BLACK);
         openButton.setForeground(Color.WHITE);
-        openButton.setPreferredSize(new Dimension(100 , 50)); // 버튼의 크기를 수동으로 조절
+        openButton.setPreferredSize(new Dimension(100, 50)); // 버튼의 크기를 수동으로 조절
         openButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image File", "jpg","png"));
                 int result = fileChooser.showOpenDialog(StartWindow.this);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     imagePath = fileChooser.getSelectedFile().getAbsolutePath();
@@ -168,36 +161,60 @@ public class StartWindow extends JFrame {
 
         btn3x3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (imagePath != null && !imagePath.isEmpty()) {
+            	if (imagePath != null && !imagePath.isEmpty()&&level!=0) {
                     dispose();
-                    new GameWindow(3, imagePath, StartWindow.this);
-                } else {
-                    JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
+                    new GameWindow(3, imagePath, StartWindow.this, level);
+                } 
+                else if(imagePath.isEmpty()&&level!=0) {
+                	JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
                             "Image Not Selected", JOptionPane.WARNING_MESSAGE);
+                }
+                else if(!imagePath.isEmpty() && level ==0) {
+                	JOptionPane.showMessageDialog(StartWindow.this, "Please set the game level", "Level Not Selected" , JOptionPane.WARNING_MESSAGE);
+                }
+                else {
+                    JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
+                            "Image and Level Not Selected", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
 
         btn4x4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (imagePath != null && !imagePath.isEmpty()) {
+                if (imagePath != null && !imagePath.isEmpty()&&level!=0) {
                     dispose();
-                    new GameWindow(4, imagePath, StartWindow.this);
-                } else {
-                    JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
+                    new GameWindow(4, imagePath, StartWindow.this, level);
+                } 
+                else if(imagePath.isEmpty()&&level!=0) {
+                	JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
                             "Image Not Selected", JOptionPane.WARNING_MESSAGE);
+                }
+                else if(!imagePath.isEmpty() && level ==0) {
+                	JOptionPane.showMessageDialog(StartWindow.this, "Please set the game level", "Level Not Selected" , JOptionPane.WARNING_MESSAGE);
+                }
+                else {
+                    JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
+                            "Image and Level Not Selected", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
 
         btn5x5.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (imagePath != null && !imagePath.isEmpty()) {
+            	if (imagePath != null && !imagePath.isEmpty()&&level!=0) {
                     dispose();
-                    new GameWindow(5, imagePath, StartWindow.this);
-                } else {
-                    JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
+                    new GameWindow(5, imagePath, StartWindow.this, level);
+                } 
+                else if(imagePath.isEmpty()&&level!=0) {
+                	JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
                             "Image Not Selected", JOptionPane.WARNING_MESSAGE);
+                }
+                else if(!imagePath.isEmpty() && level ==0) {
+                	JOptionPane.showMessageDialog(StartWindow.this, "Please set the game level", "Level Not Selected" , JOptionPane.WARNING_MESSAGE);
+                }
+                else {
+                    JOptionPane.showMessageDialog(StartWindow.this, "Please select an image first.",
+                            "Image and Level Not Selected", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
@@ -206,6 +223,7 @@ public class StartWindow extends JFrame {
         topButton.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 System.out.println("The top button has been clicked.");
+                level = 3;
                 // 여기에 상 버튼 클릭 시 동작하는 내용을 추가
             }
         });
@@ -213,6 +231,7 @@ public class StartWindow extends JFrame {
         middleButton.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 System.out.println("The middle button has been clicked");
+                level = 2;
                 // 여기에 중 버튼 클릭 시 동작하는 내용을 추가
             }
         });
@@ -220,12 +239,14 @@ public class StartWindow extends JFrame {
         bottomButton.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 System.out.println("The bottom button has been clicked");
+                level = 1;
                 // 여기에 하 버튼 클릭 시 동작하는 내용을 추가
             }
         });
 
         setVisible(true);
     }
+
     private void updatePreviewImage() {
         try {
             BufferedImage image = ImageIO.read(new File(imagePath));
@@ -234,5 +255,14 @@ public class StartWindow extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                StartWindow startWindow = new StartWindow();
+                startWindow.setVisible(true);
+            }
+        });
     }
 }
