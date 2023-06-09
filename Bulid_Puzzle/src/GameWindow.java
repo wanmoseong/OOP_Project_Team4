@@ -1,5 +1,4 @@
 
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,16 +9,15 @@ public class GameWindow extends JFrame {
 	private TimerLabel timerPanel; // 타이머
     public JPanel p_right,p_left;
     public Game start;
-	private BgMusic bgmusic;
+    private BgMusic bgmusic;
     ImageIcon icon_p_body;
 
-	public GameWindow(int A, String ImagePath, StartWindow p, int level, BgMusic bgmusic) {
-		this.bgmusic = bgmusic; // bgmusic 설정 GameWindow(int A,String ImagePath,StartWindow p) {
-
-		if (bgmusic != null) {
-			bgmusic.play();
-		}
-
+    public GameWindow(int A, String ImagePath, StartWindow p, int level, BgMusic bgmusic) {
+        this.bgmusic = bgmusic; // bgmusic 설정 GameWindow(int A,String ImagePath,StartWindow p) {
+    	
+    	if (bgmusic != null) {
+            bgmusic.play();
+    	}
     	icon_p_body = new ImageIcon("C:\\Users\\dlthf\\OneDrive\\바탕 화면\\객체지향팀플\\자바 예시 그림\\BodyImage.png"); //이미지 끌고오기
 
 		JPanel p_body = new JPanel() {
@@ -49,7 +47,7 @@ public class GameWindow extends JFrame {
         String imagePath = ImagePath; // 실제 이미지 파일
         addImageToPanel(imagePath);
 
-        start = new Game(450,A,imagePath,timerPanel,level,p,GameWindow.this);
+        start = new Game(450,A,imagePath,timerPanel,level);
         p_left.add(start);
 
         p_body.add(p_left, BorderLayout.WEST);
@@ -67,12 +65,11 @@ public class GameWindow extends JFrame {
 		back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (bgmusic != null) {
-					bgmusic.stop();
-				} // 현재 재생 중인 음악 중지
+		            bgmusic.stop();
+		    	} // 현재 재생 중인 음악 중지
+	            
 				dispose();
 				StartWindow startpage = new StartWindow();
-				startpage.setVisible(false);
-				startpage = p;
 				startpage.setVisible(true);
 			}
 		});
@@ -94,7 +91,7 @@ public class GameWindow extends JFrame {
 		resetButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	p_left.removeAll();
-		        start = new Game(450, A, imagePath, timerPanel,level,p,GameWindow.this);
+		        start = new Game(450, A, imagePath, timerPanel,level);
 		        p_left.add(start);
 		        timerPanel.resetTimer();
 		        p_left.revalidate();
@@ -123,8 +120,8 @@ public class GameWindow extends JFrame {
         p_right.add(imageLabel);
         p_right.revalidate();
     }
-	public BgMusic getBgMusic() {
-		return bgmusic;
-	}
+    public BgMusic getBgMusic() {
+        return bgmusic;
+    }
 
 }
