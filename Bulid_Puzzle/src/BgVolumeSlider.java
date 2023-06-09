@@ -12,7 +12,7 @@ public class BgVolumeSlider extends JPanel {
     public BgVolumeSlider() {
         setLayout(new FlowLayout());
 
-        volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 100);
+        volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
         volumeSlider.setMajorTickSpacing(10);
         volumeSlider.setMinorTickSpacing(5);
         volumeSlider.setPaintTicks(true);
