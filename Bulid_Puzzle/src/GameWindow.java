@@ -9,10 +9,15 @@ public class GameWindow extends JFrame {
 	private TimerLabel timerPanel; // 타이머
     public JPanel p_right,p_left;
     public Game start;
+    private BgMusic bgmusic;
     ImageIcon icon_p_body;
 
-	public GameWindow(int A,String ImagePath,StartWindow p, int level) {
-
+    public GameWindow(int A, String ImagePath, StartWindow p, int level, BgMusic bgmusic) {
+        this.bgmusic = bgmusic; // bgmusic 설정 GameWindow(int A,String ImagePath,StartWindow p) {
+    	
+    	if (bgmusic != null) {
+            bgmusic.play();
+    	}
     	icon_p_body = new ImageIcon("C:\\Users\\dlthf\\OneDrive\\바탕 화면\\객체지향팀플\\자바 예시 그림\\BodyImage.png"); //이미지 끌고오기
 
 		JPanel p_body = new JPanel() {
@@ -59,6 +64,10 @@ public class GameWindow extends JFrame {
 
 		back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (bgmusic != null) {
+		            bgmusic.stop();
+		    	} // 현재 재생 중인 음악 중지
+	            
 				dispose();
 				StartWindow startpage = new StartWindow();
 				startpage.setVisible(false);
@@ -112,6 +121,9 @@ public class GameWindow extends JFrame {
         p_right.removeAll();
         p_right.add(imageLabel);
         p_right.revalidate();
+    }
+    public BgMusic getBgMusic() {
+        return bgmusic;
     }
 
 }
