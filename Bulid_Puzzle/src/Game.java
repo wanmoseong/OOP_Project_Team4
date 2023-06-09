@@ -37,6 +37,7 @@ public class Game extends JPanel {
 	private TimerLabel timer ;
 	public boolean stop = false;
 	private int level;
+	public static BgMusic bgmusic;
 	
 	public Game(int frameSize, int intiCount, String ImagePath, TimerLabel tl, int level) {
 		this.timer = tl;
@@ -254,6 +255,10 @@ public class Game extends JPanel {
 								stop = true;
 								timer.th.interrupt();
 								JOptionPane.showMessageDialog(null,"성공");
+								String ClearAudioFilePath = "audio/KirbyClear.wav";
+								BgMusic ClearMusic = new BgMusic(ClearAudioFilePath);
+						
+								ClearMusic.playClear(); //성공 브금 재생
 							}
 						}
 
