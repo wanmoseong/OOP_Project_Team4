@@ -1,3 +1,4 @@
+package TeamProject;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,10 +26,10 @@ public class StartWindow extends JFrame {
     private BgVolumeSlider volumeSlider;
 
     public StartWindow() {
-    	{
-     		 loadAudio();
-     	     startAudio();
-     		}
+        {
+            loadAudio();
+            startAudio();
+        }
 
         setTitle("Team4 Puzzle");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,14 +87,6 @@ public class StartWindow extends JFrame {
         shapePanel.setLayout(null);
         shapePanel.setBounds(0, 0, 700, 450);
 
-        // 버튼 패널
-        /*
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(new Color(255,0,0,0));
-        buttonPanel.setLayout(null);
-        buttonPanel.setBounds(140, 170, 150, 150);
-         */
-
         JButton btn3x3 = new JButton("3x3");
         btn3x3.setBackground(Color.WHITE);
         btn3x3.setBounds(140, 165, 150, 30);
@@ -109,7 +102,6 @@ public class StartWindow extends JFrame {
         btn5x5.setBounds(140, 265, 150, 30);
         shapePanel.add(btn5x5);
 
-  
 
         JButton topButton = new JButton("상");
         topButton.setBackground(Color.WHITE);
@@ -131,9 +123,10 @@ public class StartWindow extends JFrame {
         add(leftPanel, BorderLayout.WEST);
 
         BgVolumeSlider volumeSlider = new BgVolumeSlider();
-		leftPanel.add(volumeSlider);
-		volumeSlider.setBounds(100,320,200,50);
-		volumeSlider.setBgMusic(bgmusic);
+        leftPanel.add(volumeSlider);
+        volumeSlider.setBounds(100,320,200,50);
+        volumeSlider.setBgMusic(bgmusic);
+
         // Right 패널 생성
         JPanel rightPanel = new JPanel();
         rightPanel.setBackground(Color.BLACK);
@@ -254,27 +247,27 @@ public class StartWindow extends JFrame {
         setVisible(true);
     }
     public void loadAudio() {
-     	String audioFilePath = "audio/SSKirby.wav";
-     	bgmusic = new BgMusic(audioFilePath);
-     	
-     }
+        String audioFilePath = "audio/SSKirby.wav";
+        bgmusic = new BgMusic(audioFilePath);
 
-     public void startAudio() {
-         if (bgmusic != null) {
-         	bgmusic.play();
-         }
-     }
+    }
 
-     public void stopAudio() {
-         if (bgmusic != null) {
-         	bgmusic.stop();
-         }
-     }
-     public void adjustVolume(int volume) {
-         if (bgmusic != null) {
-             
-         }
-     }
+    public void startAudio() {
+        if (bgmusic != null) {
+            bgmusic.play();
+        }
+    }
+
+    public void stopAudio() {
+        if (bgmusic != null) {
+            bgmusic.stop();
+        }
+    }
+    public void adjustVolume(int volume) {
+        if (bgmusic != null) {
+
+        }
+    }
     private void updatePreviewImage() {
         try {
             BufferedImage image = ImageIO.read(new File(imagePath));
