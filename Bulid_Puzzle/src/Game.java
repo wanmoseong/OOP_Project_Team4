@@ -36,9 +36,11 @@ public class Game extends JPanel {
 	private Thread time = new Thread(sec);
 	private TimerLabel timer ;
 	public boolean stop = false;
+	private int level;
 	
-	public Game(int frameSize, int intiCount, String ImagePath, TimerLabel tl) {
+	public Game(int frameSize, int intiCount, String ImagePath, TimerLabel tl, int level) {
 		this.timer = tl;
+		this.level = level;
 		
 		picPanel = this;
 		frameSize -= 50;
@@ -79,8 +81,6 @@ public class Game extends JPanel {
 				xList.add(yList);
 			}
 
-			// System.out.println("-"+xList+"-"); //컴파일용
-
 			while (true) {
 				int arr[] = new int[row * row - 1];
 
@@ -114,13 +114,12 @@ public class Game extends JPanel {
 				}
 				int cnt = 0;
 				for (int i = 0; i < row; i++) {
-					for (int j = 0; j < row; j++) {
-						int temp = Integer.parseInt((String)((ArrayList) xList.get(i)).get(j));
-						//System.out.println(temp);
-						if(temp == -1) break;
-						arr[cnt++] = temp;
-					}
-					
+				    ArrayList<String> sublist = (ArrayList<String>) xList.get(i);
+				    for (int j = 0; j < row; j++) {
+				        String element = sublist.get(j);
+				        if (element.equals("-1")) break;
+				        arr[cnt++] = Integer.parseInt(element);
+				    }
 				}
 				
 				int inversion = 0;				
@@ -134,7 +133,25 @@ public class Game extends JPanel {
 					System.out.println("inversion : "+inversion);
 				}
 				System.out.println(Arrays.toString(arr));
-				if(inversion==3) break;
+				
+				//난이도 하
+				if(level == 1) {
+					if(row == 3 && inversion == 7) break;
+					else if(row == 4 && inversion == 21) break;
+					else if(row == 5 && inversion == 69) break;
+				}
+				//난이도 중
+				else if( level == 2) {
+					if(row == 3 && inversion == 13) break;
+					else if(row == 4 && inversion == 51) break;
+					else if(row == 5 && inversion == 137) break;
+				} 
+				//난이도 상
+				else if(level == 3) {
+					if(row == 3 && inversion == 21) break;
+					else if(row == 4 && inversion == 78) break;
+					else if(row == 5 && inversion == 207) break;
+				}
 			}
 
 		} catch (IOException e1) {
