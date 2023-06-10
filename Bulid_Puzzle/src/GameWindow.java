@@ -1,127 +1,117 @@
+package TeamProject;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
 public class GameWindow extends JFrame {
-	private TimerLabel timerPanel; // 타이머
-    public JPanel p_right,p_left;
-    public Game start;
-    private BgMusic bgmusic;
-    ImageIcon icon_p_body;
+    private TimerLabel timerPanel; // 타이머
+    public JPanel p_right, p_left; // 좌측 우측 Panel
+    public Game start; //Game 객체
+    private BgMusic bgmusic; //음악 객체
 
     public GameWindow(int A, String ImagePath, StartWindow p, int level, BgMusic bgmusic) {
-        this.bgmusic = bgmusic; // bgmusic 설정 GameWindow(int A,String ImagePath,StartWindow p) {
-    	
-    	if (bgmusic != null) {
+        this.bgmusic = bgmusic;
+
+        if (bgmusic != null) {
             bgmusic.play();
-    	}
-    	icon_p_body = new ImageIcon("C:\\Users\\dlthf\\OneDrive\\바탕 화면\\객체지향팀플\\자바 예시 그림\\BodyImage.png"); //이미지 끌고오기
-
-		JPanel p_body = new JPanel() {
-		protected void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			g.drawImage(icon_p_body.getImage(), 0, 0, getWidth(), getHeight(), null);
-	        }
-		};
-
+        }
+        
+        //기본적인 요소 생성
         setTitle("Team4 Puzzle");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(900, 500);
-        setLocationRelativeTo(null); //실행하면 중앙에 위치 함
+        setLocationRelativeTo(null);
         Container c = getContentPane();
-
+        JPanel p_body = new JPanel();
         timerPanel = new TimerLabel();
 
-        // 가운데
-        p_right = new JPanel(); // p_right = 힌트 사진
-        p_left = new JPanel(); // p_left = 실행화면
-        p_left.setPreferredSize(new Dimension(400,400));
-
+        //좌측
+        p_left = new JPanel();
+        p_left.setPreferredSize(new Dimension(400, 400));
+        //경로 받기
+        String imagePath = ImagePath;
+        //게임 생성하기
+        start = new Game(450, A, imagePath, timerPanel, level, p, GameWindow.this);
+        p_left.add(start);
+        
+        //우측
+        addImageToPanel(imagePath);
+        p_right = new JPanel();
         p_right.setPreferredSize(new Dimension(390, 390));
         p_right.setBackground(Color.WHITE);
-		p_right.setLayout(null);
-
-        String imagePath = ImagePath; // 실제 이미지 파일
-        addImageToPanel(imagePath);
-
-        start = new Game(450,A,imagePath,timerPanel,level);
-        p_left.add(start);
-
+        p_right.setLayout(null);
+        
+        //위치 설정하기
         p_body.add(p_left, BorderLayout.WEST);
         p_body.add(p_right, BorderLayout.EAST);
         p_body.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
-
-        setVisible(true);
+        
         c.add(p_body, BorderLayout.CENTER);
         setVisible(true);
         p_body.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
-
+        
+        //뒤로가기 버튼
         JButton back = new JButton("뒤로가기");
-		back.setBounds(230, 450, 80, 30);
-
-		back.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (bgmusic != null) {
-		            bgmusic.stop();
-		    	} // 현재 재생 중인 음악 중지
-	            
-				dispose();
-				StartWindow startpage = new StartWindow();
-				startpage.setVisible(true);
-			}
-		});
-		p_body.add(back);
-
-		JButton exitButton = new JButton("종료");
-		exitButton.setBounds(350, 450, 80, 30);
-		exitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				System.exit(0);
-			}
-		});
-		p_body.add(exitButton);
-
-		JButton resetButton = new JButton("초기화");
-		resetButton.setBounds(100, 450, 80, 30);
-
-		resetButton.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		    	p_left.removeAll();
-		        start = new Game(450, A, imagePath, timerPanel,level);
-		        p_left.add(start);
-		        timerPanel.resetTimer();
-		        p_left.revalidate();
-		        p_left.repaint();
-		    }
-		});
-
-		p_body.add(resetButton);
-		p_body.add(timerPanel);
+        back.setBounds(230, 450, 80, 30);
+        back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (bgmusic != null) {
+                    bgmusic.stop();
+                }
+                dispose();
+                StartWindow startpage = new StartWindow();
+                startpage.setVisible(true);
+            }
+        });
+        p_body.add(back);
+        
+        
+        //종료 버튼
+        JButton exitButton = new JButton("종료");
+        exitButton.setBounds(350, 450, 80, 30);
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                System.exit(0);
+            }
+        });
+        p_body.add(exitButton);
+        
+        
+        //초기화 버튼(시간 및 게임)
+        JButton resetButton = new JButton("초기화");
+        resetButton.setBounds(100, 450, 80, 30);
+        resetButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                p_left.removeAll();
+                start = new Game(450, A, imagePath, timerPanel, level, p, GameWindow.this);
+                p_left.add(start);
+                timerPanel.resetTimer();
+                p_left.revalidate();
+                p_left.repaint();
+            }
+        });
+        p_body.add(resetButton);
+        p_body.add(timerPanel);
     }
 
-
-     //우측 Panel 힌트 추가를 위한 메소드
-    private void addImageToPanel(String imagePath) {
+    private void addImageToPanel(String imagePath) { //우측 이미지 추가 메소드
         ImageIcon originalImageIcon = new ImageIcon(imagePath);
         Image originalImage = originalImageIcon.getImage();
-
-        // 패널 크기에 맞게 이미지 크기 조절
         Image resizedImage = originalImage.getScaledInstance(390, 390, Image.SCALE_SMOOTH);
         ImageIcon resizedImageIcon = new ImageIcon(resizedImage);
         JLabel imageLabel = new JLabel(resizedImageIcon);
-		imageLabel.setLayout(null);
-		imageLabel.setHorizontalAlignment(JLabel.CENTER);
-		imageLabel.setBounds(0,0,390,390);
+        imageLabel.setLayout(null);
+        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+        imageLabel.setBounds(0, 0, 390, 390);
         p_right.removeAll();
         p_right.add(imageLabel);
         p_right.revalidate();
     }
+
     public BgMusic getBgMusic() {
         return bgmusic;
     }
-
 }
