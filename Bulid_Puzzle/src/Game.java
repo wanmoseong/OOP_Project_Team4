@@ -53,14 +53,10 @@ public class Game extends JPanel {
 			BufferedImage image = ImageIO.read(new File(ImagePath));
 			int imageWidth = image.getWidth();
 			int imageHeight = image.getHeight();
-			int imageBeginX = 0;
-			int imageBeginY = 0;
 			int imageSize = 0;
 			if (imageWidth > imageHeight) {
-				imageBeginX = (imageWidth - imageHeight) / 2;
 				imageSize = imageHeight / row;
 			} else {
-				imageBeginY = (imageHeight - imageWidth) / 2;
 				imageSize = imageWidth / row;
 			}
 
@@ -72,8 +68,7 @@ public class Game extends JPanel {
 						emptyY = y;
 						yList.add(empty);
 					} else {
-						picList.add(image.getSubimage(y * imageSize + imageBeginX, x * imageSize + imageBeginY,
-								imageSize, imageSize));
+						picList.add(image.getSubimage(y * imageSize, x * imageSize, imageSize, imageSize));
 						// System.out.println("-"+rowSize+"-"); //컴파일용
 						yList.add(Integer.toString(rowSize++));
 
