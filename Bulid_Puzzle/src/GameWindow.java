@@ -37,11 +37,11 @@ public class GameWindow extends JFrame {
         p_left.add(start);
         
         //우측
-        addImageToPanel(imagePath);
         p_right = new JPanel();
         p_right.setPreferredSize(new Dimension(390, 390));
         p_right.setBackground(Color.WHITE);
         p_right.setLayout(null);
+        addImageToPanel(imagePath);
         
         //위치 설정하기
         p_body.add(p_left, BorderLayout.WEST);
