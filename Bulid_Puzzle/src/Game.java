@@ -53,10 +53,14 @@ public class Game extends JPanel {
 			BufferedImage image = ImageIO.read(new File(ImagePath));
 			int imageWidth = image.getWidth();
 			int imageHeight = image.getHeight();
+			int imageBeginX = 0;
+			int imageBeginY = 0;
 			int imageSize = 0;
 			if (imageWidth > imageHeight) {
+				imageBeginX = (imageWidth - imageHeight) / 2;
 				imageSize = imageHeight / row;
 			} else {
+				imageBeginY = (imageHeight - imageWidth) / 2;
 				imageSize = imageWidth / row;
 			}
 
@@ -68,7 +72,8 @@ public class Game extends JPanel {
 						emptyY = y;
 						yList.add(empty);
 					} else {
-						picList.add(image.getSubimage(y * imageSize, x * imageSize, imageSize, imageSize));
+						picList.add(image.getSubimage(y * imageSize + imageBeginX, x * imageSize + imageBeginY,
+								imageSize, imageSize));
 						// System.out.println("-"+rowSize+"-"); //컴파일용
 						yList.add(Integer.toString(rowSize++));
 
@@ -249,18 +254,16 @@ public class Game extends JPanel {
 							if (isSuccess) {
 								stop = true;
 								timer.th.interrupt();
-								JOptionPane.showMessageDialog(null,"성공","알림",JOptionPane.INFORMATION_MESSAGE);
+								p.bgmusic.stop();
 
 								String ClearAudioFilePath = "audio/KirbyClear.wav";
 								BgMusic ClearMusic = new BgMusic(ClearAudioFilePath);
-
 								ClearMusic.playClear(); //성공 브금 재생
+
+								JOptionPane.showMessageDialog(null,"성공","알림",JOptionPane.INFORMATION_MESSAGE);
 
 								G.dispose();
 								StartWindow startpage = new StartWindow();
-								startpage.setVisible(false);
-								startpage = p;
-								startpage.setVisible(true);
 							}
 						}
 
